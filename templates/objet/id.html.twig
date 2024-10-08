@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les objets disponibles{% endblock %}
+
+{% block body %}
+
+<section class="container">
+    <h1>Les objets disponibles immédiatement:</h1>
+        <div class="row">
+            <div class="card text-center">
+                <div class="card-header">
+                   <h2>{{objet.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
+                    <p class="card-text">{{objet.description}}</p>
+                    <a href="/borrow" class="btn btn-primary">Emprunter</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    Disponible ou non ?
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock %}

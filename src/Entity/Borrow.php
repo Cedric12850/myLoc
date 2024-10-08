@@ -16,11 +16,11 @@ class Borrow
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $borrower = null;
+    private ?User $borrower = null;
 
     #[ORM\ManyToOne(inversedBy: 'borrows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?objet $objet = null;
+    private ?Objet $objet = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
@@ -33,7 +33,7 @@ class Borrow
         return $this->id;
     }
 
-    public function getBorrower(): ?user
+    public function getBorrower(): ?User
     {
         return $this->borrower;
     }

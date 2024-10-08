@@ -3,5 +3,29 @@
 {% block title %}MyLoc{% endblock %}
 
 {% block body %}
+<div class="container">
 <h1>Vous avez un besoin, nos utilisateurs ont ce qu'ils vous faut.</h1>
+
+<div class="row">
+<div id="carouselExampleAutoplaying" class="carousel slide col-xl-6 offset-xl-2  mt-3" data-bs-ride="carousel">
+    
+    <div class="carousel-inner">
+    {% for objet in objets %}
+        <div class="carousel-item active" data-bs-interval="4000">
+        <a href="/objet/{{objet.id}}"><img src="uploads/{{objet.thumbnail}}" class="img-fluid h-auto" alt="{{objet.thumbnail}}"></a>
+        </div>
+    {% endfor %}    
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button> 
+    </div>
+</div>
+</div>
+
 {% endblock %}

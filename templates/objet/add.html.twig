@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ObjetController!{% endblock %}
+{% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
-
-<h1>Ajouter un article</h1>
+<div class="container">
+    <h1>Ajouter un article</h1>
+    {{form(formulaire)}}
+</div>
 {% endblock %}
