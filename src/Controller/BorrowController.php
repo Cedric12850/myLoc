@@ -31,6 +31,7 @@ class BorrowController extends AbstractController
         $newBorrow = new Borrow;
         $form = $this->createForm(BorrowType::class, $newBorrow);
         $form->handleRequest($request);
+        if ()
         $newBorrow = $form->getdata();
         $entityManager->persist($newBorrow);
         $entityManager->flush();
@@ -39,18 +40,18 @@ class BorrowController extends AbstractController
         ]);
     }
 
-    #[Route('/borrow/{id}', name: 'app_borrow')]
-    public function showObjetById(
-        ObjetRepository $objetRepository, 
-        int $id
-        ):response
-        {
-            $objet = $objetRepository->find($id);
-            dump($objet);
-            return $this->render('borrow/index.html.twig', [
-                'objet' => $objet
-            ]);
-        }
+    // #[Route('/borrow/{id}', name: 'app_borrow')]
+    // public function showObjetById(
+    //     ObjetRepository $objetRepository, 
+    //     int $id
+    //     ):response
+    //     {
+    //         $objet = $objetRepository->find($id);
+    //         dump($objet);
+    //         return $this->render('borrow/index.html.twig', [
+    //             'objet' => $objet
+    //         ]);
+    //     }
 
 
 }
