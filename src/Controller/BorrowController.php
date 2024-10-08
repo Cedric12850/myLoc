@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Borrow;
 use App\Form\BorrowType;
+use App\Repository\ObjetRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,9 +34,23 @@ class BorrowController extends AbstractController
         $newBorrow = $form->getdata();
         $entityManager->persist($newBorrow);
         $entityManager->flush();
-        return $this->render('account/index.html.twig', [
+        return $this->render('borrow/index.html.twig', [
             'formulaire' =>$form
         ]);
     }
+
+    #[Route('/borrow/{id}', name: 'app_borrow')]
+    public function showObjetById(
+        ObjetRepository $objetRepository, 
+        int $id
+        ):response
+        {
+            $objet = $objetRepository->find($id);
+            dump($objet);
+            return $this->render('borrow/index.html.twig', [
+                'objet' => $objet
+            ]);
+        }
+
 
 }
