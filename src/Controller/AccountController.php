@@ -10,16 +10,18 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AccountController extends AbstractController
 {
-    #[Route('/account/', name: 'app_account')]
-    public function index(
-        BorrowRepository $borrowRepository,
-        
-        ): Response
+    #[Route('/account', name: 'app_account')]
+    public function index(): Response
     {
-        $borrow = $borrowRepository->findAll();
-        
+        // on va chercher dans getUser tous les emprunts pour les afficher (résultats sous forme de tableau)
+        $user = $this->getUser();
+        $userObjet = $this->getUser()->getObjets();
+        $borrow = $this->getUser()->getBorrows();
+       
         return $this->render('account/index.html.twig', [
             'borrow' => $borrow,
+            'objet' => $userObjet,
+            'user' => $user
         ]);
     }
 }

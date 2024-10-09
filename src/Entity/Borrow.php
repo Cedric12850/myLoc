@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BorrowRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Util\PropertyPath;
 
 #[ORM\Entity(repositoryClass: BorrowRepository::class)]
 class Borrow
@@ -23,9 +25,11 @@ class Borrow
     private ?Objet $objet = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual("today")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(propertyPath:"startDate")]
     private ?\DateTimeInterface $endDate = null;
 
     public function getId(): ?int
@@ -80,4 +84,5 @@ class Borrow
 
         return $this;
     }
+
 }

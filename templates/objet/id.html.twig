@@ -4,22 +4,24 @@
 
 {% block body %}
 
-<section class="container">
-    <h1>Les objets disponibles immédiatement:</h1>
-        <div class="row">
-            <div class="card text-center col-xl-8 offset-xl-2">
-                <div class="card-header">
-                   <h2>{{objet.name}}</h2>
-                </div>
-                <div class="card-body">
-                    <img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
-                    <p class="card-text">{{objet.description}}</p>
-                    <a href="/borrow/{{objet.id}}" class="btn btn-primary">Emprunter</a>
-                </div>
-                <div class="card-footer text-body-secondary">
-                    Disponible ou non ?
+    <section class="container">
+        <h1>Les objets disponibles immédiatement:</h1>
+            <div class="row">
+                <div class="card text-center col-xl-8 offset-xl-2">
+                    <div class="card-header">
+                    <h2>{{objet.name}}</h2>
+                    </div>
+                    <div class="card-body">
+                        <img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
+                        <p class="card-text">{{objet.description}}</p>
+                        {% if app.user %}
+                            <a href="/borrow/{{objet.id}}" class="btn btn-primary">Emprunter</a>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        Disponible ou non ?
+                    </div>
                 </div>
             </div>
-        </div>
-</section>
+    </section>
 {% endblock %}
