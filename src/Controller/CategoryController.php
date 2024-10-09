@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
         ):response
         {
             $categorie = $categoryRepository->find($id);
-            $objet = $this->getCategory()->getObjets();
+            $objet = $categorie->getObjets();
             dump($categorie);
             dump($objet);
             return $this->render('category/index.html.twig', [
