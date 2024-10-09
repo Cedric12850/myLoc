@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Borrow;
 use App\Form\BorrowType;
 use App\Repository\ObjetRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,36 +21,50 @@ class BorrowController extends AbstractController
         ]);
     }
 
-    #[Route('/borrow', name:'app_borrow')]
-    public function add(
+
+    #[Route('/borrow/{id}', name: 'app_borrow')]
+    public function borrowObjetById(
         Request $request,
-        EntityManagerInterface $entityManager
-    ):Response
-    {
+        EntityManagerInterface $entityManager,
+        ObjetRepository $objetRepository, 
+        int $id
+        ):response
+        {
+        $objet = $objetRepository->find($id);
+        $borrower = $this->getUser();
+        //partie pour ajouter l'emprunt en bdd
         $newBorrow = new Borrow;
         $form = $this->createForm(BorrowType::class, $newBorrow);
         $form->handleRequest($request);
-        if ()
-        $newBorrow = $form->getdata();
-        $entityManager->persist($newBorrow);
-        $entityManager->flush();
-        return $this->render('borrow/index.html.twig', [
-            'formulaire' =>$form
-        ]);
+       
+           
+            
+        if ($form->isSubmitted()&& $form->isValid()){
+            $newBorrow = $form->getdata();
+            //ajoutte les id du borrower et de l'objet pour enregistrer en bdd
+            $newBorrow ->setBorrower($borrower);
+            $newBorrow ->setObjet($objet);
+            $entityManager->persist($newBorrow);
+            
+            //recupération des points de la catégorie
+            $objetPoints = $objet->getcategory();
+            $objetPoints = $objetPoints->getPoints();
+            //récupération des points de l'utilisateurs
+            $userPoints = $borrower->getCumulPoints();
+            //ajout des points de la catégorie au points de l'utilisateurs
+            $cumulPoints = $objetPoints + $userPoints;
+            //ajout des points dans la colonne user de la bdd
+            $borrower->setCumulPoints($cumulPoints);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_account');
     }
+        return $this->render('borrow/index.html.twig', [
+            'formulaire' =>$form,
+            'objet' => $objet
+        ]);
+        }
 
-    // #[Route('/borrow/{id}', name: 'app_borrow')]
-    // public function showObjetById(
-    //     ObjetRepository $objetRepository, 
-    //     int $id
-    //     ):response
-    //     {
-    //         $objet = $objetRepository->find($id);
-    //         dump($objet);
-    //         return $this->render('borrow/index.html.twig', [
-    //             'objet' => $objet
-    //         ]);
-    //     }
-
-
+       
 }

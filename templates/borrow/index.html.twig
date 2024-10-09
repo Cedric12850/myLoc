@@ -3,22 +3,24 @@
 {% block title %}Emprunter{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Emprunter cet objet ?</h1>
-    {{dump(objet)}}
-    
-    <div class="row">
-            <div class="card m-3 col-md-5 col-lg-3 col-xl-3">
-                <a href="/objet/{{objet.id}}"><img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
-                <div class="card-body">
-                    <h2 class="card-title">{{objet.name}}</h2></a>
-                    <p class="card-text">{{objet.description}}</p>
-                    <small> {{objet.category.name }} ({{objet.category.points}}pts) </small>
-                </div>
-            </div>
+    <div class="row mt-3">
+        <div class="card col-xl-5 offset-xl-2">
+            <img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
+            <div class="card-body">
+                <h2 class="card-title">{{objet.name}}</h2>
+                <p class="card-text">{{objet.description}}</p>
+                <small> {{objet.category.name }} ({{objet.category.points}}pts) </small>
+            </div>  
         </div>
 
-    <div class="row">
-       
+        <div class="card col-xl-2 offset-xl-1">
+            {{form_start(formulaire)}}
+                {{form_row(formulaire.startDate)}}
+                {{form_row(formulaire.endDate)}}
+            {{ form_end(formulaire) }}
+        </div>
     </div>
-
+</div>
 {% endblock %}
