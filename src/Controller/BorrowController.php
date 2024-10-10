@@ -32,6 +32,7 @@ class BorrowController extends AbstractController
         {
         $objet = $objetRepository->find($id);
         $borrower = $this->getUser();
+        $ownerPoints = $objet->getOwner();
         //partie pour ajouter l'emprunt en bdd
         $newBorrow = new Borrow;
         $form = $this->createForm(BorrowType::class, $newBorrow);
@@ -50,11 +51,11 @@ class BorrowController extends AbstractController
             $objetPoints = $objet->getcategory();
             $objetPoints = $objetPoints->getPoints();
             //récupération des points de l'utilisateurs
-            $userPoints = $borrower->getCumulPoints();
+            $userPoints = $ownerPoints->getCumulPoints();
             //ajout des points de la catégorie au points de l'utilisateurs
             $cumulPoints = $objetPoints + $userPoints;
             //ajout des points dans la colonne user de la bdd
-            $borrower->setCumulPoints($cumulPoints);
+            $ownerPoints->setCumulPoints($cumulPoints);
 
             $entityManager->flush();
 

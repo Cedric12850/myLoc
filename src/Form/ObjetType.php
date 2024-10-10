@@ -18,12 +18,15 @@ class ObjetType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('thumbnail', FileType::class)
-            ->add('description')
-            ->add('owner', EntityType::class, [
-                'class' => User::class,
-                
+            ->add('thumbnail', FileType::class, [
+                'mapped' => false,
+                'required' => false,
             ])
+            ->add('description')
+            // ->add('owner', EntityType::class, [
+            //     'class' => User::class,
+                
+            // ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

@@ -13,3 +13,7 @@ html {
     text-transform: capitalize;
 }
 
+#isUser{
+    width: max-content;
+    padding: 2px;
+}

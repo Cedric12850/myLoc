@@ -3,11 +3,7 @@
 {% block title %}MyLoc{% endblock %}
 
 {% block body %}
-    {% if app.user %}
-        <h6 class="ms-2">Bienvenue {{user.LastName}}</h6>
-    {% else %}
-        <h6 class="ms-2">Bienvenue visiteur</h6>
-    {% endif %}
+    
     <div class="container">
         <h1>Vous avez un besoin, nos utilisateurs ont ce qu'ils vous faut.</h1>
 
@@ -16,8 +12,8 @@
             
                 <div class="carousel-inner">
                 {% for objet in objets %}
-                    <div class="carousel-item active" data-bs-interval="4000">
-                    <a href="/objet/{{objet.id}}"><img src="uploads/{{objet.thumbnail}}" class="img-fluid h-auto" alt="{{objet.thumbnail}}"></a>
+                    <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="4000">
+                    <a href="/objet/{{objet.id}}"><img src="{{ asset('uploads/' ~ objet.thumbnail) }}" class="img-fluid h-auto" alt="{{objet.thumbnail}}"></a>
                     </div>
                 {% endfor %}    
                 </div>

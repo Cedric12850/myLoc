@@ -5,71 +5,99 @@
 {% block body %}
     <div class="container">
         <h1> Mon compte:</h1>
-            <div class="row">
-                <div class="row col-xl-6">
-                <div class="">
+        <div class="row">
+        {# div avec mes infos et mes emprunts #}
+            <div class="row col-xl-5">
+                <div class="row  align-self-start">
                     <h4>Mes informations personnelles:</h4>
-                    <div class="row">
-                        <h5><i class="bi bi-person-badge"></i>: {{user.LastName}} {{user.FirstName}} </h5>
-                        <p><i class="bi bi-envelope-at"></i>: {{user.email}}</p>
-                        <p>Nombre de points: {{user.cumulPoints}}</p>
-                    </div>
+                        <div class="card pt-3 col-8 offset-1"> 
+                            <div class="row">
+                                <h5><i class="bi bi-person-badge"></i>: {{user.LastName}} {{user.FirstName}} </h5>
+                                <p><i class="bi bi-envelope-at"></i>: {{user.email}}</p>
+                                <p>Nombre de points: {{user.cumulPoints}}</p>
+                            </div>
+                        </div>
                 </div>
-
-                <div class="row mt-3">
+                
+                <div class="row align-self-start">
+                        <h4>Mes emprunts:</h4>
+                        {% for borrow in borrow %}
+                            <p>
+                                <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#objetModal">{{borrow.objet.name}}</a> 
+                                (date limite de restitution: {{borrow.endDate|date("d/m/Y")}})
+                            </p>
+                            <div class="modal fade" id="objetModal" tabindex="-1" aria-labelledby="objetModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="objetModalLabel">{{borrow.objet.name}}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ asset("uploads/" ~ borrow.objet.thumbnail) }}" class="card-img-top" alt="...">
+                                            <p class="card-text">{{borrow.objet.description}}</p>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Propriétaire: {{borrow.objet.owner}}</li>
+                                                <li class="list-group-item">a restitué au plus tard le {{borrow.endDate|date("d/m/Y")}} </li>   
+                                            </ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        {# <button type="button" class="btn btn-primary">Save changes</button> #}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                
+                        {% endfor %}
+                </div>             
+            </div>
+        {# div avec mes objets #}
+            <div class="col-xl-7 ">
+                <div class="row">
                         <h4>Mes objets:</h4>
                             {% for objet in objet %}
-                                <div class="card col-xl-6">
-                                    <img src="uploads/{{objet.thumbnail}}" class="card-img-top" alt="...">
+                                <div class="card p-0 mt-1 me-2 col-xl-3">
+                                    <img src="{{ asset("uploads/" ~ objet.thumbnail) }}" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{objet.name}}</h5>
                                         <p class="card-text">{{objet.description}}</p>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Propriétaire: {{objet.owner}}</li>  
+                                    <ul class="list-group list-group-flush ">                   
+                                        <div class="card-body ">
+                                            <a href="/account/edit/{{objet.id}}"><button type="button" class="btn btn-warning card-link" href="/account/edit/{{objet.id}}">
+                                            Modifier</button></a>
+                                            <button type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#{{objet.id}}">
+                                            Supprimer</button>
+                                             <!-- Modal -->
+                                                <div class="modal fade" id="{{objet.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{objet.name}}</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Voulez-vous effacer cet objet ?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                    <a href="/account/delete/{{objet.id}}"><button type="button submit" class="btn btn-danger">Effacer</button></a>
+                                                                    <pre>
+                                                                        {{ dump(objet) }}
+                                                                    </pre>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </div>
                                     </ul>
-                                    <div class="card-body">
-                                        <a href="#" class="card-link">Modifier</a>
-                                        <a href="#" class="card-link">Supprimer</a>
-                                    </div>
-                                </div>        
-                            {% endfor %}
-                    </div>
-                    </div>           
+                                </div>
 
-                <div class="col-xl-5 offset-xl-1">
-                    <div class="row">
-                        <h4>Mes emprunts</h4>
-                        {% for borrow in borrow %}
-                        <p><a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            {{borrow.objet.name}} 
-                        </a>(date limite de restitution: {{borrow.endDate|date("d/m/Y")}})</p>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{borrow.objet.name}}</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="uploads/{{borrow.objet.thumbnail}}" class="card-img-top" alt="...">
-                                        <p class="card-text">{{borrow.objet.description}}</p>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">Propriétaire: {{borrow.objet.owner}}</li>
-                                            <li class="list-group-item">a restitué au plus tard le {{borrow.endDate|date("d/m/Y")}} </li>   
-                                        </ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                            
-                        {% endfor %}
-                    </div>                    
-                </div>
+                               
+                            {% endfor %}
+                </div>                    
             </div>
+        </div>    
     </div>
+    
 {% endblock %}

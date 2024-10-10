@@ -3,8 +3,11 @@
 {% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
+{% if app.user %}
 <div class="container">
     <h1>Ajouter un article</h1>
     {{form(formulaire)}}
+    <a class="btn btn-secondary" href="/">Annuler</a>
 </div>
+{% endif %}
 {% endblock %}

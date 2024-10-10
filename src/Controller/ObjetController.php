@@ -20,6 +20,7 @@ class ObjetController extends AbstractController
     public function index(ObjetRepository $objetRepository): Response
     {
         $objets = $objetRepository->findAll();
+        
         return $this->render('objet/index.html.twig', [
             'objets' => $objets,
         ]);
@@ -34,6 +35,8 @@ class ObjetController extends AbstractController
         ):Response
     {
         $newObject = new Objet();
+        $user = $this->getUser('id');
+        dump($user);
         $form = $this->createForm(ObjetType::class, $newObject);
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()) 
@@ -58,6 +61,7 @@ class ObjetController extends AbstractController
             }
 
             $newObject = $form->getData();
+            $newObject->setOwner($user);
             $entityManager->persist($newObject);
             $entityManager->flush();
             

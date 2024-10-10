@@ -12,7 +12,7 @@
                     <h2>{{objet.name}}</h2>
                     </div>
                     <div class="card-body">
-                        <img class="card-img-top" src="../uploads/{{objet.thumbnail}}" alt="{{objet.name}}">
+                        <img class="card-img-top" src="{{ asset("uploads/" ~ objet.thumbnail) }}" alt="{{objet.name}}">
                         <p class="card-text">{{objet.description}}</p>
                         {% if app.user %}
                             <a href="/borrow/{{objet.id}}" class="btn btn-primary">Emprunter</a>

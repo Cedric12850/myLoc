@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'article{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="card col-xl-3">
+            <img src="{{ asset("uploads/" ~ objet.thumbnail) }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{objet.name}}</h5>
+                <p class="card-text">{{objet.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">                   
+                <div class="card-body">
+                    {{objet.category}}
+                </div>
+            </ul>
+        </div> 
+                                    
+        <div class="card col-xl-7">                                 
+            {{form(editform)}}
+            <a href="/account"><button type="button" class="btn btn-secondary card-link" href="/account/edit/{{objet.id}}">Annuler</button></a>
+        </div> 
+    </div>
+</div
+{% endblock %}
