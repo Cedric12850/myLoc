@@ -13,8 +13,11 @@
                 <div class="card-body">
                     <h2 class="card-title">{{objet.name}}</h2></a>
                     <p class="card-text">{{objet.description}}</p>
-                    <small> {{objet.category.name }} ({{objet.category.points}}pts) </small>
+                    <small> {{objet.category.name }} ({{objet.category.points}}pts) </small>   
                 </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Propriétaire: {{objet.owner}}</li>
+                </ul>
             </div>
         {% endfor %}
         </div>

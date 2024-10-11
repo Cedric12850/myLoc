@@ -11,31 +11,36 @@
 
         {% block javascripts %}
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
         {% endblock %}
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
-            <div class="row">
-            {# div logo et nom de l'utilisateur connecté #}
-              <div class="">
-                <a class="navbar-brand" href="/">MyLoc</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                {% if is_granted('ROLE_ADMIN') %}
-                  <h6 class="ms-2 border bg-warning" id="isUser">ADMIN</h6>
-                    {% elseif app.user %}
-                      <h6 class="ms-2 border bg-primary" id="isUser">{{app.user.LastName}}</h6>
-                    {% else %}
-                  <h6 class="ms-2 border bg-secondary" id="isUser">Visiteur</h6>
-                {% endif %}
+            
+              <div class="row col-xs-4">
+                {# div logo et nom de l'utilisateur connecté #}
+                <div class="">
+                  <a class="navbar-brand" href="/">MyLoc</a>                
+                  {% if is_granted('ROLE_ADMIN') %}
+                    <h6 class="ms-2 border bg-warning" id="isUser">ADMIN</h6>
+                      {% elseif app.user %}
+                        <h6 class="ms-2 border bg-primary" id="isUser">{{app.user.LastName}}</h6>
+                      {% else %}
+                    <h6 class="ms-2 border bg-secondary" id="isUser">Visiteur</h6>
+                  {% endif %}
+                </div>
               </div>
-            {# div avec le menu burger #}
-              <div class="">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <div class="">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                </div>
+              
+                {# div avec le menu burger #}
+              
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-self-end">
                     <li class="nav-item">
                       <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                     </li>
@@ -76,7 +81,7 @@
                       </li>
                     {% if is_granted('ROLE_ADMIN') %}               
                     <li class="nav-item"> 
-                      <a class="nav-link border bg-warning" id="isAdmin" href="/admin">Admin</a>
+                      <a class="nav-link " href="/admin">Admin</a>
                     </li>
                     {% endif %}
                   </ul>
@@ -85,8 +90,8 @@
                     <button class="btn btn-outline-success" type="submit">Rechercher</button>
                   </form>
                 </div>
-              </div>
-            </div>
+              
+            
           </div>
         </nav>
         {% block body %}{% endblock %}

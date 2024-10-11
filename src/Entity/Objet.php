@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\PseudoTypes\False_;
 
 #[ORM\Entity(repositoryClass: ObjetRepository::class)]
 class Objet
@@ -38,6 +39,9 @@ class Objet
      */
     #[ORM\OneToMany(targetEntity: Borrow::class, mappedBy: 'objet')]
     private Collection $borrows;
+
+    #[ORM\Column]
+    private ?bool $disponible = true;
 
     public function __construct()
     {
@@ -135,6 +139,18 @@ class Objet
                 $borrow->setObjet(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isDisponible(): ?bool
+    {
+        return $this->disponible;
+    }
+
+    public function setDisponible(bool $disponible): static
+    {
+        $this->disponible = $disponible;
 
         return $this;
     }

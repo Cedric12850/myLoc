@@ -22,7 +22,6 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         $userObjet = $this->getUser()->getObjets();
         $borrow = $this->getUser()->getBorrows();
-       
         return $this->render('account/index.html.twig', [
             'borrow' => $borrow,
             'objet' => $userObjet,
@@ -40,7 +39,7 @@ class AccountController extends AbstractController
     ):Response
     {
         $objet =$entityManager->getRepository(Objet::class)->find($id);
-        dump($objet);
+        
         if(!$objet){
             throw $this->createNotFoundException(
                 "L'objet n'est pas répertorié."

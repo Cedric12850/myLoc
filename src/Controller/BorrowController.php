@@ -38,7 +38,7 @@ class BorrowController extends AbstractController
         $form = $this->createForm(BorrowType::class, $newBorrow);
         $form->handleRequest($request);
        
-           
+        
             
         if ($form->isSubmitted()&& $form->isValid()){
             $newBorrow = $form->getdata();
@@ -46,7 +46,13 @@ class BorrowController extends AbstractController
             $newBorrow ->setBorrower($borrower);
             $newBorrow ->setObjet($objet);
             $entityManager->persist($newBorrow);
+            //Changement de statut de la disponibilityé à false
             
+            $isdisponible = $objet->isDisponible();
+                if ($isdisponible == true){
+                    $isNotdisponible = false;
+                    $isdisponible = $objet->setDisponible($isNotdisponible);
+                }
             //recupération des points de la catégorie
             $objetPoints = $objet->getcategory();
             $objetPoints = $objetPoints->getPoints();
@@ -67,5 +73,5 @@ class BorrowController extends AbstractController
         ]);
         }
 
-       
+        
 }

@@ -12,7 +12,7 @@
             
                 <div class="carousel-inner">
                 {% for objet in objets %}
-                    <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="4000">
+                    <div class="carousel-item {% if loop.first %}active{% endif %}" >
                     <a href="/objet/{{objet.id}}"><img src="{{ asset('uploads/' ~ objet.thumbnail) }}" class="img-fluid h-auto" alt="{{objet.thumbnail}}"></a>
                     </div>
                 {% endfor %}    

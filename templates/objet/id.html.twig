@@ -14,12 +14,23 @@
                     <div class="card-body">
                         <img class="card-img-top" src="{{ asset("uploads/" ~ objet.thumbnail) }}" alt="{{objet.name}}">
                         <p class="card-text">{{objet.description}}</p>
-                        {% if app.user %}
+                        {% if (app.user) and (objet.disponible == true)   %}
+                        {# {% if (is_granted('ROLE_ADMIN')) or (app.user) and (objet.disponible == true)   %} #}
                             <a href="/borrow/{{objet.id}}" class="btn btn-primary">Emprunter</a>
                         {% endif %}
                     </div>
                     <div class="card-footer text-body-secondary">
-                        Disponible ou non ?
+                        {% if (app.user) and (objet.disponible == true) %}
+                            Disponible
+                            {% else %}
+                                {% for date in objet.borrows %}
+                                    Disponible à partir du {{date.endDate|date("d/m/Y")}}
+                                {% endfor %}
+                                
+                        {% endif %}
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
